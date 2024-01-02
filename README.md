@@ -2,7 +2,7 @@
 temporary repository
 
 # file tree
-'''bash
+```bash
 .
 |-- data
 |   |-- TUSimple
@@ -22,5 +22,5 @@ temporary repository
     |-- model.py
     |-- scnn_train.py
     `-- unet_train.py
-    '''
+```
 
