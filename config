@@ -1,0 +1,16 @@
+#!/bin/bash
+MEMBERS=("junsuk") # assign users of this image-container, NO comma between member name
+
+WORKDIR="/home/workspace" # code-dir that will be shown on container
+DATADIR="/home/data"      # data-dir that will be shown on container
+
+IMAGE_NAME="lane_detection" # name the image that will be built
+IMAGE_TAG="scnn"         # tag of the image that will be built
+CONTAINER_NAME="pj_scnn_junsuk"  # name the container that will be deployed ex) <purpose>_<detail>_<user>
+USER="junsuk" # name the container owner
+GPUS='"device=4"' # assign gpu device
+
+PROJECT_REPO_DIR="/home/junsuk/project_scnn/code" # absolute path for code folder
+PROJECT_DATA_DIR="/raid/junsuk/lane_detection/" # absolute path for data folder
+
+REMOVE_ON_END=true # if true, the container will be automatically removed when you exit from container or container finished the command you put on docker run

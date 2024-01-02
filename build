@@ -1,0 +1,36 @@
+#!/bin/bash
+# bash build : creates the image 
+# THIS BUILD FILE SHALL ONLY BE CHANGED BY LAB-TECHNICIAN
+# OTHERS SHALL NOT TOUCH THIS CODE
+
+source config
+passwd_dir='/etc/passwd'
+passwd_list=()
+
+# make membersfile file
+touch members.txt
+
+filename='member.txt'
+# Create an empty file
+touch $filename
+# Check the file is exists or not
+if [ -f $filename ]; then
+   rm member.txt
+   echo "$filename is removed"
+fi
+
+# search from passwd
+# for now, gid will be same as pid, but should be revised to project-id
+for mem in ${MEMBERS[@]}; do
+    while read line; do
+        if [[ $line == *"$mem:"* ]]; then
+            uid=$(cut -d : -f 3 <<< $line)
+            echo $mem":x:"$uid":"$uid"::"$WORKDIR":/bin/bash" >> members.txt
+        fi
+    done < $passwd_dir
+done
+
+# build docker image
+docker build -t $IMAGE_NAME:$IMAGE_TAG . || { echo "--------------------"; echo "failed to create docker image"; echo "exiting build sequence ...."; exit 1; }
+
+echo DONE

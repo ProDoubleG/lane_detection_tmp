@@ -1,0 +1,22 @@
+#!/bin/bash
+# this goes bash user_run
+# you will access to docker with a warning that gid xxxx is not found, but ignore it
+
+source config
+
+if $REMOVE_ON_END;
+then
+    REMOVE_ON_END="--rm"
+else
+    REMOVE_ON_END=""
+fi
+
+docker run -it \
+    $REMOVE_ON_END \
+    --user $USER \
+    --gpus=$GPUS \
+    -v $PROJECT_REPO_DIR:$WORKDIR \
+    -v $PROJECT_DATA_DIR:$DATADIR \
+    --name $CONTAINER_NAME \
+    $IMAGE_NAME:$IMAGE_TAG \
+    bash
